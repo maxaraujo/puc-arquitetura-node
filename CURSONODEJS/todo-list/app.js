@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const yargs = require('yargs');
-const task = require('./add');
+const task = require('./task');
 
 //alterando a versão do CLI
 yargs.version('1.0.1');
@@ -31,8 +31,8 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Remove a task from the ToDo list',
-    handler: function(){
-        console.log(chalk.red('Removing a existing task'));
+    handler: function(argv){
+        task.removeTask(argv.name);
     }
 })
 
@@ -40,15 +40,16 @@ yargs.command({
     command: 'list',
     describe: 'List a all tasks',
     handler: function(){
-        console.log(chalk.blue('Listing out all tasks'));
+        const tasks = task.loadAllTasks();
+        console.log(tasks);
     }
 })
 
 yargs.command({
     command: 'read',
     describe: 'Reading a task',
-    handler: function(){
-        console.log(chalk.yellow('Reading a task'));
+    handler: function(argv){
+        task.readTask(argv.name);
     }
 })
 
